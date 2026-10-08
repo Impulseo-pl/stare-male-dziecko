@@ -167,6 +167,7 @@ def home():
     pr = TOM[0]["paras"]
     left = "".join(f'<p class="t{" f" if i == 0 else ""}">{p}</p>' for i, p in enumerate(pr[:2]))
     right = "".join(f'<p class="t">{p}</p>' for p in pr[2:5])
+    FLIP_PAGES = "".join(f'<div class="fpage"><img src="img/strony/s{n:02d}.jpg" alt="Strona {n} książki"></div>' for n in [2] + list(range(4, 20)))
     body = f'''<section class="hero">
   <figure class="hero-art">{img(base, "swiatlo", "Obraz Vilhelma Hammershøia: światło z okna pada smugą do pustego pokoju", eager=True)}<figcaption>{cap("swiatlo")}</figcaption></figure>
   <div class="hero-txt">
@@ -204,13 +205,19 @@ def home():
   </div>
 </div></section>
 
-<section class="sec" id="fragment"><div class="wrap">
-  <div class="spread">
-    <div class="pg open"><div class="run">Stare małe Dziecko · Tom I</div><p class="lbl">PROLOG</p><h3>{TOM[0]["title"]}</h3><div class="orn">⁂</div>{left}<div class="no">8</div></div>
-    <div class="pg"><div class="run">Prolog</div>{right}<div class="no">9</div></div>
-  </div>
-  <div class="spread-cta"><a class="btn" href="czytaj/">Czytaj dalej za darmo</a><p>Prolog i dwa pierwsze rozdziały, w przeglądarce, bez zakładania konta.</p></div>
+<section class="sec flip-sec" id="fragment"><div class="wrap">
+  <h2>Przeczytaj fragment za darmo</h2>
+  <p class="sub">Przekartkuj początek książki: okładkę, słowo od autora, prolog i dwa pierwsze rozdziały. Przeciągnij róg strony albo użyj strzałek.</p>
+  <div class="flip-stage"><div id="flipbook">
+    <div class="fpage" data-density="hard"><img src="img/strony/s01.jpg" alt="Okładka Tomu I"></div>
+    {FLIP_PAGES}
+    <div class="fpage blank"></div>
+    <div class="fpage end" data-density="hard"><h3>Tu kończy się fragment</h3><p>Dalej czeka pusta ławka, astronom, malarka i stary ksiądz.</p><a class="btn light" href="tom-1/">Kup Tom I · 29,90 zł</a></div>
+  </div></div>
+  <div class="flip-ctrl"><button id="flip-prev" type="button">Poprzednia</button><span id="flip-count"></span><button id="flip-next" type="button">Następna</button></div>
+  <div class="flip-cta"><a class="btn" href="tom-1/">Kup Tom I i czytaj dalej</a><p>Wolisz większe litery? <a class="txt-link" href="czytaj/">Otwórz fragment w czytniku</a></p></div>
 </div></section>
+<script src="assets/page-flip.browser.js" defer></script><script src="assets/flip.js" defer></script>
 
 <section class="sec wall">{contents(base)}</section>
 

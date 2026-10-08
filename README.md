@@ -18,3 +18,7 @@ v1 (granatowe niebo, gwiazdy, rysowana ławka w SVG, złote przyciski, 3 karty c
 v2 = wygląd wydawnictwa literackiego: obrazy Vilhelma Hammershøia (domena publiczna, Commons) zamiast rysunków,
 EB Garamond + Public Sans, czerń/szarość ścian/papier, jeden akcent (ceglasta czerwień). Okładka jako komponent CSS (`.book`),
 rozkładówka prologu, spis treści z numerami stron z PDF, oferty jako lista z radiem. `img/okladka.jpg` i `img/og.jpg` to zrzuty.
+
+## Flipbook (08.10.2026)
+Klient poprosił o „interaktywną książkę” (Heyzine/Flipsnack). Zrobione u nas: StPageFlip 2.0.7 (MIT, `assets/page-flip.browser.js`, bez abonamentu),
+strony z PDF renderowane PyMuPDF do `img/strony/` (okładka s01, s02, s04–s19 = do końca rozdz. II), sekcja #fragment na stronie głównej.
