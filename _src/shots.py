@@ -12,11 +12,12 @@ with sync_playwright() as p:
     for path in P:
         if path=='koszyk/':
             pg.goto('http://127.0.0.1:8125/stare-male-dziecko/tom-1/?team=1&opcja=prezent',wait_until='networkidle')
-            pg.fill('#g_email','zosia@example.com');pg.fill('#g_ded','Dla Zosi od babci');pg.click('#buy-form button[type=submit]')
+            pg.fill('#g_email','zosia@example.com');pg.fill('#g_ded','Dla Zosi od babci');pg.click('form[data-buy] button[type=submit]')
             pg.wait_for_load_state('networkidle')
         else:
             pg.goto('http://127.0.0.1:8125/stare-male-dziecko/'+path+'?team=1',wait_until='networkidle')
-        pg.wait_for_timeout(900)
+        pg.evaluate("async()=>{for(let y=0;y<document.body.scrollHeight;y+=600){scrollTo(0,y);await new Promise(r=>setTimeout(r,120))}scrollTo(0,0)}")
+        pg.wait_for_timeout(1200)
         n=(path.strip('/') or 'home')
         pg.screenshot(path=f'{OUT}/{w}_{n}.png',full_page=True)
         pg.screenshot(path=f'{OUT}/{w}_{n}_top.png')

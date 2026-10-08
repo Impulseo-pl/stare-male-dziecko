@@ -12,3 +12,9 @@ Podstrony: główna, /tom-1/ (karta produktu, prezent z dedykacją), /czytaj/ (c
 
 Budowanie: `python _src/wyciagnij.py` (PDF -> `_src/tom1.json`), `python _src/build.py` (strony).
 Zrzuty: `python _src/shots.py 1440|390` (serwer `python -m http.server 8125` z `C:\Users\kluch`).
+
+## v2 (08.10.2026): nowy projekt po „widać AI slop”
+v1 (granatowe niebo, gwiazdy, rysowana ławka w SVG, złote przyciski, 3 karty cen) odrzucona.
+v2 = wygląd wydawnictwa literackiego: obrazy Vilhelma Hammershøia (domena publiczna, Commons) zamiast rysunków,
+EB Garamond + Public Sans, czerń/szarość ścian/papier, jeden akcent (ceglasta czerwień). Okładka jako komponent CSS (`.book`),
+rozkładówka prologu, spis treści z numerami stron z PDF, oferty jako lista z radiem. `img/okladka.jpg` i `img/og.jpg` to zrzuty.

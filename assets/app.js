@@ -36,31 +36,31 @@
     });
   });
 
-  // karta produktu
-  var buyForm = document.getElementById('buy-form');
-  if (buyForm) {
-    var gift = document.getElementById('gift'), priceEl = document.getElementById('buy-price');
+  // formularze zakupu (karta produktu i strona główna)
+  document.querySelectorAll('form[data-buy]').forEach(function (buyForm) {
+    var gift = buyForm.querySelector('.gift'), priceEl = buyForm.querySelector('[data-price]');
     function sync() {
       var v = buyForm.querySelector('input[name=opcja]:checked').value;
-      gift.classList.toggle('show', v === 'prezent');
-      priceEl.innerHTML = zl(PRODUCTS[v].price).replace(' zł', ' <small>zł brutto</small>');
+      if (gift) gift.classList.toggle('show', v === 'prezent');
+      if (priceEl) priceEl.innerHTML = zl(PRODUCTS[v].price).replace(' zł', ' <small>zł</small>');
     }
     buyForm.addEventListener('change', sync);
     var q = new URLSearchParams(location.search).get('opcja');
-    if (q && PRODUCTS[q]) { buyForm.querySelector('input[value=' + q + ']').checked = true; }
+    if (q && PRODUCTS[q] && buyForm.querySelector('input[value=' + q + ']')) buyForm.querySelector('input[value=' + q + ']').checked = true;
     sync();
     buyForm.addEventListener('submit', function (e) {
       e.preventDefault();
       var v = buyForm.querySelector('input[name=opcja]:checked').value, meta = null;
       if (v === 'prezent') {
+        if (!gift) { location.href = base + 'tom-1/?opcja=prezent#kup'; return; }
         var em = buyForm.querySelector('[name=g_email]');
-        if (!em.value || em.value.indexOf('@') < 1) { em.focus(); document.getElementById('gift-err').classList.add('show'); return; }
+        if (!em.value || em.value.indexOf('@') < 1) { em.focus(); buyForm.querySelector('.err').classList.add('show'); return; }
         meta = { email: em.value, kiedy: buyForm.querySelector('[name=g_data]').value, dedykacja: buyForm.querySelector('[name=g_ded]').value };
       }
       add(v, meta);
       location.href = base + 'koszyk/';
     });
-  }
+  });
 
   // powiadomienie o kolejnym tomie
   document.querySelectorAll('form[data-ok]').forEach(function (f) {
@@ -146,15 +146,4 @@
     addEventListener('scroll', onScroll, { passive: true }); onScroll();
   }
 
-  // hero: w bloku naprzeciwko gasną kolejne okna (jak w rozdziale I)
-  var wins = Array.prototype.slice.call(document.querySelectorAll('.hero-scene .win.on'));
-  var still = !matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (wins.length && still) {
-    setInterval(function () {
-      var on = wins.filter(function (w) { return w.classList.contains('on'); });
-      var off = wins.filter(function (w) { return !w.classList.contains('on'); });
-      if (on.length > 4 && Math.random() < .7) on[Math.floor(Math.random() * on.length)].classList.remove('on');
-      else if (off.length) off[Math.floor(Math.random() * off.length)].classList.add('on');
-    }, 2600);
-  }
 })();
